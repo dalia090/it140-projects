@@ -23,3 +23,54 @@
 
 # TODO 6: Show how movement fits into repeated gameplay.
 # The final game continues accepting commands until a required ending occurs.
+```text
+# Project One Move-Between-Rooms Pseudocode
+
+START move_between_rooms
+
+    SET current_room
+    SET movement_command
+    SET next_room
+
+    OUTPUT "Where would you like to explore?"
+    OUTPUT "Enter North, South, East, or West:"
+    INPUT movement_command
+
+    IF movement_command is a valid direction from the current room THEN
+
+        SET next_room to the room in that direction
+        SET current_room to next_room
+
+        OUTPUT "You enter the " + current_room + "."
+        OUTPUT "Look around carefully. There may be something important
+                here!"
+
+    ELSE
+
+        OUTPUT "You can't go that way from here."
+        OUTPUT "Try another direction: North, South, East, or West."
+
+    END IF
+
+    WHILE the game has not reached a required ending
+
+        OUTPUT "Where would you like to go next?"
+        INPUT movement_command
+
+        IF movement_command is a valid direction from the current room THEN
+
+            SET next_room to the room in that direction
+            SET current_room to next_room
+
+            OUTPUT "You enter the " + current_room + "."
+
+        ELSE
+
+            OUTPUT "Not there! Choose another direction."
+
+        END IF
+
+    END WHILE
+
+END move_between_rooms
+```
