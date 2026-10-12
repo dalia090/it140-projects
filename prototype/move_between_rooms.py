@@ -1,18 +1,38 @@
 """Module Six Milestone starter for the simplified movement prototype."""
 
-# A dictionary for the simplified dragon text game.
-# The dictionary links a room to other rooms.
+# A dictionary for the Museum Mystery text game.
 rooms = {
-    "Great Hall": {"south": "Bedroom"},
-    "Bedroom": {"north": "Great Hall", "east": "Cellar"},
-    "Cellar": {"west": "Bedroom"},
+    'Museum Entrance': {'north': 'Art Studio', 'east': 'Security Office'},
+    'Art Studio': {'south': 'Museum Entrance', 'north': 'Paris Gallery', 'east': 'Mona Lisa Gallery'},
+    'Security Office': {'west': 'Museum Entrance', 'north': 'Mona Lisa Gallery'},
+    'Paris Gallery': {'south': 'Art Studio', 'east': 'Fashion Gallery'},
+    'Fashion Gallery': {'west': 'Paris Gallery', 'east': 'Golden Exhibit Hall'},
+    'Golden Exhibit Hall': {'west': 'Fashion Gallery'},
+    'Mona Lisa Gallery': {'west': 'Art Studio', 'east': 'Paris Souvenir Room', 'south': 'Security Office'},
+    'Paris Souvenir Room': {'west': 'Mona Lisa Gallery'}
 }
 
+# Set the starting room.
+current_room = 'Museum Entrance'
 
-# TODO: Set the player's starting room for the simplified prototype.
+# Run the game until the player exits.
+while current_room != 'exit':
+    print('\nYou are in the', current_room)
 
-# TODO: Create the gameplay loop required by the milestone.
-# Within the loop, complete the required behavior in small steps:
+    command = input(
+        'Enter a direction (north, south, east, west) or exit: '
+    ).lower().strip()
+
+    if command == 'exit':
+        current_room = 'exit'
+        print('Thank you for playing Museum Mystery!')
+
+    elif command in rooms[current_room]:
+        current_room = rooms[current_room][command]
+        print('You moved to the', current_room)
+
+    else:
+        print('Invalid command. Please try another direction.')
 #   1. Display the current room.
 #   2. Prompt for a movement command or "exit".
 #   3. Branch for a valid move, exit, or invalid input.
