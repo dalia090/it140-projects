@@ -1,4 +1,5 @@
 
+
 """Project Two: Museum Mystery
 Full Name: Dalia Garcia
 """
@@ -6,28 +7,34 @@ Full Name: Dalia Garcia
 
 def show_instructions():
     """Display the game objective and available commands."""
-    print("Welcome to Museum Mystery!")
-    print("Collect all 6 items to win the game.")
-    print("Do not enter the Mona Lisa Gallery until you have")
-    print("collected all the items, or you will lose!")
-    print("Move commands: go north, go south, go east, go west")
-    print("Collect items by typing: get item name")
-    print("Type quit to exit the game.")
+    print("\nWelcome to Museum Mystery!")
+    print("Explore the museum and collect all 6 hidden items.")
+    print("Collect all items before entering the Mona Lisa Gallery.")
+    print("The Mona Lisa is the villain. Entering her gallery")
+    print("without all 6 items will end the game.")
+    print("\nMovement commands:")
+    print("go north, go south, go east, go west")
+    print("Collect an item using: get item name")
+    print("Example: get Key")
+    print("\nGood luck!")
 
 
 def show_status(current_room, inventory, rooms):
-    """Display the player's current game status."""
-    print("\nYou are in the", current_room)
+    """Display the player's current room, inventory, and item."""
+    print("\n" + "-" * 35)
+    print("You are in the", current_room)
     print("Inventory:", inventory)
 
     if "item" in rooms[current_room]:
-        print("You see the", rooms[current_room]["item"])
+        print("You see a", rooms[current_room]["item"])
+
+    print("-" * 35)
 
 
 def main():
-    """Run the main gameplay loop."""
+    """Run the Museum Mystery gameplay loop."""
 
-    # Room dictionary with items and connections.
+    # Dictionary connecting rooms and their items.
     rooms = {
         "Museum Entrance": {
             "north": "Art Studio",
@@ -59,25 +66,23 @@ def main():
             "east": "Paris Souvenir Room",
             "item": "Golden Frame"
         },
-        "Mona Lisa Gallery": {
-            "west": "Art Studio",
-            "east": "Paris Souvenir Room",
-            "south": "Security Office"
-        },
         "Paris Souvenir Room": {
             "west": "Mona Lisa Gallery",
             "east": "Golden Exhibit Hall",
             "item": "Mini Eiffel Tower"
+        },
+        "Mona Lisa Gallery": {
+            "west": "Art Studio",
+            "east": "Paris Souvenir Room",
+            "south": "Security Office"
         }
     }
 
-    # Set the starting room.
+    # Set the starting room and empty inventory.
     current_room = "Museum Entrance"
-
-    # Create an empty inventory.
     inventory = []
 
-    # Items required to win.
+    # List of items required to win the game.
     winning_items = [
         "Paintbrush",
         "Key",
@@ -87,47 +92,35 @@ def main():
         "Mini Eiffel Tower"
     ]
 
-    # Display instructions.
+    # Display game instructions.
     show_instructions()
-    """Display the game objective and available commands."""
-    print("Welcome to Museum Mystery!")
-    print("You are exploring a museum to collect six hidden items.")
-    print("Your goal is to collect all six items before facing the Mona Lisa.")
-    print("Be careful! If you enter the Mona Lisa Gallery before")
-    print("collecting all six items, you will lose the game.")
-    print()
-    print("Movement commands:")
-    print("Type 'go north', 'go south', 'go east', or 'go west'.")
-    print("To collect an item, type 'get' followed by the item name.")
-    print("Example: get Key")
-    print("Type 'quit' at any time to exit the game.")
-    print()
-    print("Good luck, and enjoy Museum Mystery!")
 
-
-
-    # Main gameplay loop.
+    # Continue playing until the player wins or loses.
     while True:
+
+        # Display the current room and inventory.
         show_status(current_room, inventory, rooms)
 
         # Check whether the player entered the villain's room.
         if current_room == "Mona Lisa Gallery":
             if all(item in inventory for item in winning_items):
-                print("Congratulations! You collected all 6 items!")
-                print("You defeated the Mona Lisa!")
+                print("\nCongratulations! You have collected all")
+                print("items and defeated the Mona Lisa!")
                 print("YOU WIN!")
             else:
-                print("Oh no! You entered the Mona Lisa Gallery")
+                print("\nOh no! You entered the Mona Lisa Gallery")
                 print("before collecting all 6 items.")
                 print("GAME OVER!")
+
+            print("Thanks for playing Museum Mystery!")
             break
 
-        # Ask the player for a command.
-        command = input("\nEnter your move: ").strip()
+        # Ask the player for their next command.
+        command = input("Enter your move: ").strip()
 
-        # Allow the player to quit.
+        # Handle the quit command.
         if command.lower() == "quit":
-            print("Thank you for playing Museum Mystery!")
+            print("Thanks for playing Museum Mystery!")
             break
 
         # Handle movement commands.
@@ -150,15 +143,16 @@ def main():
             ):
                 collected_item = rooms[current_room].pop("item")
                 inventory.append(collected_item)
-                print(collected_item, "collected!")
+                print("You collected the", collected_item + "!")
             else:
-                print("That item is not available in this room.")
+                print("Invalid item. That item is not available here.")
 
         # Handle invalid commands.
         else:
-            print("Invalid command. Try 'go north' or 'get Key'.")
+            print("Invalid command.")
+            print("Use 'go north' or 'get Key', for example.")
 
 
+# Start the game.
 if __name__ == "__main__":
     main()
-
